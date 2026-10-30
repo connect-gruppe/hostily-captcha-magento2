@@ -1,0 +1,25 @@
+{
+  "name": "hostily/module-captcha",
+  "description": "hostily Captcha as a CAPTCHA type for Magento 2 (storefront forms and checkout)",
+  "type": "magento2-module",
+  "license": "MIT",
+  "version": "0.1.0",
+  "require": {
+    "php": "~8.1.0||~8.2.0||~8.3.0||~8.4.0",
+    "magento/framework": "*",
+    "magento/module-store": "*",
+    "magento/module-config": "*",
+    "magento/module-csp": "*",
+    "magento/module-re-captcha-ui": "*",
+    "magento/module-re-captcha-admin-ui": "*",
+    "magento/module-re-captcha-frontend-ui": "*",
+    "magento/module-re-captcha-validation-api": "*"
+  },
+  "suggest": {
+    "magento/module-re-captcha-webapi-ui": "Needed for the checkout (place order)"
+  },
+  "autoload": {
+    "files": ["registration.php"],
+    "psr-4": {"Hostily\\Captcha\\": ""}
+  }
+}

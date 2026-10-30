@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Nur ein Sicherheitsnetz: im Admin-Bereich ist der Typ immer "nicht eingerichtet" (siehe Model/Adminhtml/UiConfigProvider) -->
+    <type name="Magento\ReCaptchaUi\Model\UiConfigResolver">
+        <arguments>
+            <argument name="uiConfigProviders" xsi:type="array">
+                <item name="hostily" xsi:type="object">Hostily\Captcha\Model\Adminhtml\UiConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ReCaptchaUi\Model\ValidationConfigResolver">
+        <arguments>
+            <argument name="validationConfigProviders" xsi:type="array">
+                <item name="hostily" xsi:type="object">Hostily\Captcha\Model\Adminhtml\ValidationConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Im Shop-Bereich ist der Typ ohne Bereichs-Vorsatz bekannt ("hostily"), in den Web-API-Bereichen mit ("frontend_hostily", siehe etc/di.xml) -->
+    <type name="Magento\ReCaptchaUi\Model\UiConfigResolver">
+        <arguments>
+            <argument name="uiConfigProviders" xsi:type="array">
+                <item name="hostily" xsi:type="object">Hostily\Captcha\Model\Frontend\UiConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ReCaptchaUi\Model\ValidationConfigResolver">
+        <arguments>
+            <argument name="validationConfigProviders" xsi:type="array">
+                <item name="hostily" xsi:type="object">Hostily\Captcha\Model\Frontend\ValidationConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

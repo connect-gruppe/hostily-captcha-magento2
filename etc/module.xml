@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Hostily_Captcha" setup_version="0.1.0">
+        <sequence>
+            <module name="Magento_Config"/>
+            <module name="Magento_Csp"/>
+            <module name="Magento_ReCaptchaUi"/>
+            <module name="Magento_ReCaptchaAdminUi"/>
+            <module name="Magento_ReCaptchaFrontendUi"/>
+        </sequence>
+    </module>
+</config>

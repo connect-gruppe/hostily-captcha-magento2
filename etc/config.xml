@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <recaptcha_frontend>
+            <type_hostily>
+                <service_url>https://captcha.hostily.de</service_url>
+                <mode>visible</mode>
+                <language>auto</language>
+                <on_error>allow</on_error>
+            </type_hostily>
+        </recaptcha_frontend>
+    </default>
+</config>

@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Auswahl "hostily Captcha" bei den Formularen (Stores > Konfiguration > Sicherheit > Google reCAPTCHA Storefront) -->
+    <virtualType name="Magento\ReCaptchaAdminUi\Model\OptionSource\Type">
+        <arguments>
+            <argument name="options" xsi:type="array">
+                <item name="hostily" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">hostily Captcha</item>
+                    <item name="value" xsi:type="string">hostily</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\ReCaptchaAdminUi\Model\OptionSource">
+        <plugin name="hostily_captcha_hide_in_backend" type="Hostily\Captcha\Plugin\OptionSourcePlugin"/>
+    </type>
+
+    <virtualType name="Hostily\Captcha\Model\OptionSource\Mode" type="Magento\ReCaptchaAdminUi\Model\OptionSource">
+        <arguments>
+            <argument name="options" xsi:type="array">
+                <item name="visible" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Visible (checkbox)</item>
+                    <item name="value" xsi:type="string">visible</item>
+                </item>
+                <item name="invisible" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Invisible (solves on submit)</item>
+                    <item name="value" xsi:type="string">invisible</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Hostily\Captcha\Model\OptionSource\Language" type="Magento\ReCaptchaAdminUi\Model\OptionSource">
+        <arguments>
+            <argument name="options" xsi:type="array">
+                <item name="auto" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Automatic (language of the page)</item>
+                    <item name="value" xsi:type="string">auto</item>
+                </item>
+                <item name="de" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">German</item>
+                    <item name="value" xsi:type="string">de</item>
+                </item>
+                <item name="en" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">English</item>
+                    <item name="value" xsi:type="string">en</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Hostily\Captcha\Model\OptionSource\OnError" type="Magento\ReCaptchaAdminUi\Model\OptionSource">
+        <arguments>
+            <argument name="options" xsi:type="array">
+                <item name="allow" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Let visitors through (default)</item>
+                    <item name="value" xsi:type="string">allow</item>
+                </item>
+                <item name="block" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Block</item>
+                    <item name="value" xsi:type="string">block</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Das Secret wird nicht in app/etc/config.php exportiert -->
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="recaptcha_frontend/type_hostily/secret" xsi:type="string">1</item>
+            </argument>
+            <argument name="environment" xsi:type="array">
+                <item name="recaptcha_frontend/type_hostily/secret" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Der Typ "hostily" bei den Aufloesern von Magento_ReCaptchaUi (Schluessel = Bereich_Typ) -->
+    <type name="Magento\ReCaptchaUi\Model\UiConfigResolver">
+        <arguments>
+            <argument name="uiConfigProviders" xsi:type="array">
+                <item name="frontend_hostily" xsi:type="object">Hostily\Captcha\Model\Frontend\UiConfigProvider</item>
+                <item name="admin_hostily" xsi:type="object">Hostily\Captcha\Model\Adminhtml\UiConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ReCaptchaUi\Model\ValidationConfigResolver">
+        <arguments>
+            <argument name="validationConfigProviders" xsi:type="array">
+                <item name="frontend_hostily" xsi:type="object">Hostily\Captcha\Model\Frontend\ValidationConfigProvider</item>
+                <item name="admin_hostily" xsi:type="object">Hostily\Captcha\Model\Adminhtml\ValidationConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Pruefung beim hostily-Dienst statt bei Google, wenn die Konfiguration vom Typ "hostily" ist -->
+    <type name="Magento\ReCaptchaValidationApi\Api\ValidatorInterface">
+        <plugin name="hostily_captcha_validator" type="Hostily\Captcha\Plugin\ValidatorPlugin" sortOrder="100"/>
+    </type>
+    <type name="Magento\ReCaptchaUi\Model\CaptchaResponseResolverInterface">
+        <plugin name="hostily_captcha_response" type="Hostily\Captcha\Plugin\ResponseResolverPlugin"/>
+    </type>
+    <type name="Magento\ReCaptchaUi\Model\RequestHandlerInterface">
+        <plugin name="hostily_captcha_active_type" type="Hostily\Captcha\Plugin\RequestHandlerPlugin"/>
+    </type>
+
+    <!-- "Rejected" ist ein Pruef-Fehler (Meldung "reCAPTCHA verification failed."), "unavailable" ein technischer Fehler -->
+    <type name="Magento\ReCaptchaValidationApi\Model\ValidationErrorMessagesProvider">
+        <arguments>
+            <argument name="errors" xsi:type="array">
+                <item name="hostily-rejected" xsi:type="string" translatable="true">Rejected by hostily Captcha.</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\ReCaptchaValidationApi\Model\ErrorMessagesProvider">
+        <arguments>
+            <argument name="errors" xsi:type="array">
+                <item name="hostily-rejected" xsi:type="string" translatable="true">Rejected by hostily Captcha.</item>
+                <item name="hostily-unavailable" xsi:type="string" translatable="true">The hostily Captcha service is not available.</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

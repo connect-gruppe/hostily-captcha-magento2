@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="recaptcha_frontend">
+            <group id="type_hostily" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>hostily Captcha</label>
+                <comment><![CDATA[Privacy-friendly spam protection from <a target="_blank" href="https://captcha.hostily.de">captcha.hostily.de</a>. Create a project there, enter this shop's domain under "allowed domains" and paste the site key and secret below. Then choose "hostily Captcha" for the forms above ("Enable for ...").]]></comment>
+
+                <field id="site_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="0">
+                    <label>Site Key</label>
+                </field>
+                <field id="secret" translate="label comment" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="0">
+                    <label>Secret</label>
+                    <comment>Stays on the server. Without site key and secret nothing is protected and nothing is blocked.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="service_url" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="1">
+                    <label>Service URL</label>
+                    <comment>Default https://captcha.hostily.de (own installation possible).</comment>
+                </field>
+                <field id="mode" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="1">
+                    <label>Mode</label>
+                    <source_model>Hostily\Captcha\Model\OptionSource\Mode</source_model>
+                </field>
+                <field id="language" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label>Widget Language</label>
+                    <source_model>Hostily\Captcha\Model\OptionSource\Language</source_model>
+                </field>
+                <field id="on_error" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="1">
+                    <label>If the Service Fails</label>
+                    <comment>Applies when the service cannot be reached, answers unexpectedly or rejects the secret. Always logged (var/log).</comment>
+                    <source_model>Hostily\Captcha\Model\OptionSource\OnError</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
