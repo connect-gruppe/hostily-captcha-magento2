@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface;
  */
 class Verifier
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.1.1';
 
     private const CONFIG_ERRORS = ['invalid-input-secret', 'missing-input-secret', 'bad-request'];
     /** Felder, die nie an den Dienst gehen (Kennwoerter, Tokens, technische Felder) */
